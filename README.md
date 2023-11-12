@@ -9,6 +9,8 @@
 ![Typescript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E)
 
+Приложение было написано с использованием препроцессора SCSS, CSS модулей и браузерного API Audio
+
 
 
 
