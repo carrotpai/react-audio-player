@@ -1,0 +1,58 @@
+.input {
+    appearance: none;
+    height: 12px;
+    width: 100%;
+    cursor: pointer;
+    appearance: none;
+    outline: none;
+    background: transparent;
+
+    &:hover {
+        &::-webkit-slider-thumb {
+            opacity: 1;
+        }
+
+        &::-moz-range-thumb {
+            opacity: 1;
+        }
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    &::-webkit-slider-runnable-track {
+        background: var(--progress-bar-color);
+        height: 4px;
+    }
+
+    &::-moz-range-track {
+        background: var(--progress-bar-color);
+        height: 4px;
+    }
+
+    &::-webkit-slider-thumb {
+        opacity: 0;
+        margin-top: -3px;
+        appearance: none;
+        width: 10px;
+        height: 10px;
+        background-color: var(--green-main);
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+    }
+
+    &::-moz-range-thumb {
+        opacity: 0;
+        appearance: none;
+        width: 10px;
+        height: 10px;
+        background-color: var(--green-main);
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+    }
+}

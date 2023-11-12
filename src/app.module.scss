@@ -1,0 +1,10 @@
+.app-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: var(--background-main);
+    background-image: url("./assets/background.png");
+    background-repeat: no-repeat;
+    background-position: right;
+}

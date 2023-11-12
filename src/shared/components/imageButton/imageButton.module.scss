@@ -1,0 +1,22 @@
+.button {
+    background-color: var(--green-secondary);
+    border-radius: 100px;
+    border: none;
+    cursor: pointer;
+
+    &_clear {
+        background: transparent;
+    }
+
+    &__icon {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &:hover {
+        opacity: 0.8;
+    }
+}

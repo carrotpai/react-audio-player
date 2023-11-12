@@ -1,0 +1,125 @@
+.wrapper {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    position: relative;
+    gap: 28px;
+}
+
+.container {
+    z-index: 1;
+    width: 580px;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: stretch;
+    gap: 24px;
+    background-color: #ffffff;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    padding: 8px 12px;
+    background-image: url("../../assets/Logo.jpg");
+    background-repeat: no-repeat;
+    background-position: calc(50% - 52px) 0;
+}
+
+.preview-wrapper {
+    position: relative;
+    left: -184px;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    z-index: 2;
+
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        left: 32px;
+        top: 32px;
+        width: calc(100% - 64px);
+        height: calc(100% - 64px);
+        border-radius: 50%;
+        z-index: -1;
+        transition: all 1s linear;
+        background: linear-gradient(
+            45deg,
+            #fb0094,
+            #00b7ff,
+            #05ac6a,
+            #ffff00,
+            #ff0000,
+            #fb0094,
+            #00b7ff,
+            #05ac6a,
+            #ffff00,
+            #ff0000
+        );
+        animation: steam 20s linear infinite;
+        background-size: 400%;
+    }
+    &::after {
+        filter: blur(24px);
+    }
+
+    &_track-playing {
+        &::before,
+        &::after {
+            left: -1px;
+            top: -1px;
+            width: calc(100% + 2px);
+            height: calc(100% + 2px);
+        }
+    }
+}
+
+.preview {
+    border-radius: 50%;
+    object-position: 50% 50%;
+    object-fit: cover;
+}
+
+.text-block {
+    width: 100%;
+    &__text-title,
+    &__text-author {
+        text-align: center;
+        margin: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &__text-author {
+        color: #262626;
+        font-weight: 500;
+        font-size: 20px;
+        margin-bottom: 4px;
+    }
+
+    &__text-title {
+        color: #808080;
+        font-weight: 400;
+        font-size: 20px;
+    }
+}
+
+.item-info {
+    width: 320px;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+}
+
+@keyframes steam {
+    0% {
+        background-position: 0 0;
+    }
+
+    50% {
+        background-position: 400% 0%;
+    }
+
+    100% {
+        background-position: 0 0;
+    }
+}

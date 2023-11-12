@@ -1,0 +1,11 @@
+.track-time {
+    display: flex;
+    flex-flow: column nowrap;
+    &__time {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        font-size: 14px;
+        color: var(--gray-text-color);
+    }
+}
