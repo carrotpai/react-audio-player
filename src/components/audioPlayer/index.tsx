@@ -2,6 +2,9 @@ import { Controls, ProgressBar, VolumeBar } from "./src/components";
 import { useAudio } from "./src/hooks/useAudio";
 import { PlaylistItem } from "./types";
 import styles from "./audio.module.scss";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import LazyImage from "@/shared/components/lazyImage";
 
 interface AudioPlayerProps {
 	playlist?: PlaylistItem[];
@@ -52,12 +55,20 @@ function AudioPlayer({ playlist }: AudioPlayerProps) {
 					styles["preview-wrapper_track-playing"]
 				}`}
 			>
-				<img
+				<LazyImage
 					className={styles.preview}
 					src={playerState.previewImageSrc}
 					alt={`image preview for audio track ${playerState.author} ${playerState.trackTitle}`}
 					width={280}
 					height={280}
+					placeholder={
+						<Skeleton
+							circle
+							width={280}
+							height={280}
+							style={{ display: "block" }}
+						/>
+					}
 				/>
 			</div>
 		</div>

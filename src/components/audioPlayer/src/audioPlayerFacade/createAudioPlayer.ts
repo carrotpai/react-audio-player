@@ -59,10 +59,12 @@ export function createAudioPlayer(
 		player.volume = volume;
 	}
 
+	/** Клик по прогресс бару */
 	function setTrackCurrentTime(time: number) {
 		if (time > player.duration)
 			throw new Error("new current time for track exceeds duration");
 		player.currentTime = time;
+		emitStateChange();
 	}
 
 	function playNextItem() {
