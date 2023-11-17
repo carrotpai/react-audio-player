@@ -5,15 +5,72 @@ import styles from "./audio.module.scss";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import LazyImage from "@/shared/components/lazyImage";
+import React from "react";
 
 interface AudioPlayerProps {
 	playlist?: PlaylistItem[];
 }
 
 function AudioPlayer({ playlist }: AudioPlayerProps) {
+	const wrapperRef = React.useRef<HTMLDivElement>(null);
+	const [progressBarRef, volumeBarRef] = [
+		React.useRef<HTMLInputElement>(null),
+		React.useRef<HTMLInputElement>(null),
+	];
 	const { playerState, controls } = useAudio(playlist ?? []);
+
+	React.useEffect(() => {
+		wrapperRef.current?.focus();
+	}, []);
+
+	const dispatchArrowPressEvent = (
+		e: React.KeyboardEvent,
+		type: "keydown" | "keyup",
+		key: "ArrowRight" | "ArrowLeft"
+	) => {
+		if (
+			e.target === progressBarRef.current ||
+			e.target === volumeBarRef.current
+		)
+			return;
+		progressBarRef.current?.dispatchEvent(
+			new KeyboardEvent(type, { bubbles: true, key: key })
+		);
+	};
 	return (
-		<div className={styles.wrapper}>
+		<div
+			ref={wrapperRef}
+			className={styles.wrapper}
+			onKeyDown={(e) => {
+				switch (e.key) {
+					case " ":
+						if (!(e.target instanceof HTMLButtonElement)) {
+							controls.togglePlay();
+						}
+						break;
+					case "ArrowUp":
+						controls.setVolume(playerState.volume + 0.03);
+						break;
+					case "ArrowDown":
+						controls.setVolume(playerState.volume - 0.03);
+						break;
+					case "ArrowRight":
+						dispatchArrowPressEvent(e, "keydown", "ArrowRight");
+						break;
+					case "ArrowLeft":
+						dispatchArrowPressEvent(e, "keydown", "ArrowLeft");
+						break;
+					default:
+						break;
+				}
+			}}
+			onKeyUp={(e) => {
+				if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+					dispatchArrowPressEvent(e, "keyup", e.key);
+				}
+			}}
+			tabIndex={0}
+		>
 			<div className={styles.container}>
 				<Controls
 					audioStatus={playerState.status}
@@ -23,6 +80,7 @@ function AudioPlayer({ playlist }: AudioPlayerProps) {
 				/>
 				<div className={styles["item-info"]}>
 					<VolumeBar
+						ref={volumeBarRef}
 						value={playerState.volume}
 						onMuteClick={() => controls.setVolume(0)}
 						onMaxClick={() => controls.setVolume(1)}
@@ -53,20 +111,15 @@ function AudioPlayer({ playlist }: AudioPlayerProps) {
 						</p>
 					</div>
 					<ProgressBar
+						ref={progressBarRef}
 						currentTime={playerState.currentTime}
 						duration={playerState.duration}
 						playerStatus={playerState.status}
 						onChange={(progress) => {
 							controls.setTrackCurrentTime(progress);
 						}}
-						forArrowKeyPress={{
+						forKeyPress={{
 							durationStepValue: 3,
-							onArrowDown: () => {
-								controls.setVolume(playerState.volume - 0.03);
-							},
-							onArrowUp: () => {
-								controls.setVolume(playerState.volume + 0.03);
-							},
 						}}
 					/>
 				</div>

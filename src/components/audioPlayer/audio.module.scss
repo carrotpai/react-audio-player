@@ -4,6 +4,9 @@
     align-items: center;
     position: relative;
     gap: 28px;
+    &:focus {
+        outline: none;
+    }
 }
 
 .container {
@@ -21,8 +24,6 @@
     background-repeat: no-repeat;
     background-position: calc(50% - 52px) 0;
 }
-
-
 
 .preview-wrapper {
     position: relative;
