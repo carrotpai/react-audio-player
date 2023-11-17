@@ -20,6 +20,8 @@ function RangeInput(props: RangeInputProps) {
 			max={props.max}
 			step={props.step}
 			value={props.value}
+			onKeyDown={props.onKeyDown}
+			onKeyUp={props.onKeyUp}
 			onChange={(e) => {
 				props.onChange(e);
 			}}

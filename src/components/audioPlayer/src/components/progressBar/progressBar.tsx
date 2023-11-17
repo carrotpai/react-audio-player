@@ -2,11 +2,27 @@ import RangeInput from "@/shared/components/rangeInput";
 import { useEffect, useState } from "react";
 import styles from "./progressBar.module.scss";
 
+const notTriggerDraggingEventsKeys = ["ArrowDown", "ArrowUp"];
+const arrowKeyPressEventsKeys = [
+	"ArrowRight",
+	"ArrowLeft",
+	"ArrowDown",
+	"ArrowUp",
+];
+
 interface ProgressBarProps {
 	playerStatus: "PLAYING" | "PAUSED";
 	currentTime: number;
 	duration: number;
 	onChange: (progress: number) => void;
+	forArrowKeyPress: {
+		/**шаг изменения при нажатии на горизонтальные стрелки клавиатуры (к примеру left = -3s, right = +3s)*/
+		durationStepValue: number;
+
+		/**Колбеки для пресса вертикальных стрелок клавиатуры */
+		onArrowUp: () => void;
+		onArrowDown: () => void;
+	};
 }
 
 /** прогресс бар содержит в себе отдельный стейт (для возможности определять когда нужно менять прогресс аудио)
@@ -20,6 +36,7 @@ function ProgressBar({
 	duration,
 	onChange,
 	playerStatus,
+	forArrowKeyPress,
 }: ProgressBarProps) {
 	const [isDragging, setIsDragging] = useState(false);
 	const [progress, setProgress] = useState(currentTime);
@@ -66,6 +83,43 @@ function ProgressBar({
 						setIsDragging(false);
 					}
 					onChange(progress);
+				}}
+				onKeyDown={(e) => {
+					if (!arrowKeyPressEventsKeys.includes(e.key)) {
+						return;
+					}
+					if (
+						playerStatus === "PLAYING" &&
+						!isDragging &&
+						!notTriggerDraggingEventsKeys.includes(e.key)
+					) {
+						setIsDragging(true);
+					}
+					const { value } = e.target as HTMLInputElement;
+					switch (e.key) {
+						case "ArrowLeft":
+							setProgress(+value - forArrowKeyPress.durationStepValue);
+							break;
+						case "ArrowRight":
+							setProgress(+value + forArrowKeyPress.durationStepValue);
+							break;
+						case "ArrowUp":
+							e.preventDefault();
+							forArrowKeyPress.onArrowUp();
+							break;
+						case "ArrowDown":
+							e.preventDefault();
+							forArrowKeyPress.onArrowDown();
+							break;
+						default:
+							break;
+					}
+				}}
+				onKeyUp={() => {
+					if (isDragging) {
+						setIsDragging(false);
+						onChange(progress);
+					}
 				}}
 			/>
 		</div>

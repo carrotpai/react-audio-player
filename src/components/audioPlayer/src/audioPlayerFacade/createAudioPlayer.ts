@@ -26,7 +26,7 @@ export function createAudioPlayer(
 			trackTitle: playlist[currentItemIndex].name,
 			author: playlist[currentItemIndex].author,
 			status: getPlayerStatus(),
-			volume: player.volume,
+			volume: getPlayerVolume(),
 			currentTime: getPlayerTrackCurrentTime(),
 			duration: getPlayerTrackDuration(),
 			previewImageSrc: playlist[currentItemIndex].previewImageSrc,
@@ -43,6 +43,9 @@ export function createAudioPlayer(
 	function getPlayerTrackDuration() {
 		return player.duration;
 	}
+	function getPlayerVolume() {
+		return player.volume;
+	}
 
 	/** Loader */
 
@@ -55,15 +58,23 @@ export function createAudioPlayer(
 	/**Controls */
 
 	function setVolume(volume: number = DEFAULT_AUDIO_VOLUME) {
+		let newVolume = volume;
+		if (volume < 0) newVolume = 0;
+		if (volume > 1) newVolume = 1;
 		localStorage.setItem("audio-volume", String(volume));
-		player.volume = volume;
+		player.volume = newVolume;
+		emitStateChange();
 	}
 
-	/** Клик по прогресс бару */
 	function setTrackCurrentTime(time: number) {
-		if (time > player.duration)
-			throw new Error("new current time for track exceeds duration");
-		player.currentTime = time;
+		let newTime = time;
+		if (time > player.duration) {
+			newTime = player.duration;
+		}
+		if (time < 0) {
+			newTime = 0;
+		}
+		player.currentTime = newTime;
 		emitStateChange();
 	}
 

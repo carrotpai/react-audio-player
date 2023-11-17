@@ -9,6 +9,7 @@ interface VolumeBarProps {
 	onMuteClick?: () => void;
 	onMaxClick?: () => void;
 	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 /**value [0, 1] */
@@ -18,6 +19,7 @@ function VolumeBar({
 	onChange,
 	onMuteClick,
 	onMaxClick,
+	onKeyDown,
 }: VolumeBarProps) {
 	return (
 		<div className={styles.container}>
@@ -33,6 +35,7 @@ function VolumeBar({
 				max={100}
 				value={value * 100}
 				onChange={onChange}
+				onKeyDown={onKeyDown}
 			/>
 			<ImageButton
 				clear

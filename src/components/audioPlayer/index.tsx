@@ -30,6 +30,19 @@ function AudioPlayer({ playlist }: AudioPlayerProps) {
 							const value = +e.target.value / 100;
 							controls.setVolume(value);
 						}}
+						onKeyDown={(e) => {
+							const { value } = e.target as HTMLInputElement;
+							switch (e.key) {
+								case "ArrowLeft":
+									controls.setVolume(+value / 100 - 0.03);
+									break;
+								case "ArrowRight":
+									controls.setVolume(+value / 100 + 0.03);
+									break;
+								default:
+									break;
+							}
+						}}
 					/>
 					<div className={styles["text-block"]}>
 						<p className={styles["text-block__text-author"]}>
@@ -45,6 +58,15 @@ function AudioPlayer({ playlist }: AudioPlayerProps) {
 						playerStatus={playerState.status}
 						onChange={(progress) => {
 							controls.setTrackCurrentTime(progress);
+						}}
+						forArrowKeyPress={{
+							durationStepValue: 3,
+							onArrowDown: () => {
+								controls.setVolume(playerState.volume - 0.03);
+							},
+							onArrowUp: () => {
+								controls.setVolume(playerState.volume + 0.03);
+							},
 						}}
 					/>
 				</div>

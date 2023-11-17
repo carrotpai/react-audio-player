@@ -7,7 +7,8 @@
     outline: none;
     background: transparent;
 
-    &:hover {
+    &:hover,
+    &:focus {
         &::-webkit-slider-thumb {
             opacity: 1;
         }
@@ -15,10 +16,6 @@
         &::-moz-range-thumb {
             opacity: 1;
         }
-    }
-
-    &:focus {
-        outline: none;
     }
 
     &::-webkit-slider-runnable-track {
