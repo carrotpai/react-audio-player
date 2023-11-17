@@ -19,7 +19,16 @@
 
 для запуска проекта требуется Node.js и установка всех зависимостей
 
-### `npm i` & `npm run dev` 
+## Заметка
+
+в проект были добавлены keyboard контролы:
+* space = переключение проигрывателя (pause/play)
+* arrow right/left = прогресс трека
+* arrow down/up = громкость
+
+В свою очередь некоторые компоненты имеют свои контролы (громкость можно регулировать как с помощью arrow up-down, так и при фокусе с помощью arrow left-right)
+
+### `npm i` => `npm run dev` 
 
 deploy https://react-audio-player-cyan.vercel.app/
 
