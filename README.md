@@ -21,6 +21,8 @@
 
 ### `npm i` & `npm run dev` 
 
+deploy https://react-audio-player-cyan.vercel.app/
+
 
 
 

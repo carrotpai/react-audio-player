@@ -98,10 +98,18 @@ function ProgressBar({
 					const { value } = e.target as HTMLInputElement;
 					switch (e.key) {
 						case "ArrowLeft":
-							setProgress(+value - forArrowKeyPress.durationStepValue);
+							if (+value - forArrowKeyPress.durationStepValue < 0) {
+								setProgress(0);
+							} else {
+								setProgress(+value - forArrowKeyPress.durationStepValue);
+							}
 							break;
 						case "ArrowRight":
-							setProgress(+value + forArrowKeyPress.durationStepValue);
+							if (+value + forArrowKeyPress.durationStepValue > duration) {
+								setProgress(duration);
+							} else {
+								setProgress(+value + forArrowKeyPress.durationStepValue);
+							}
 							break;
 						case "ArrowUp":
 							e.preventDefault();
